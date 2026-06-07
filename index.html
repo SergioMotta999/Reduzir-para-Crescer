@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reduzir para Crescer | Calculadora de Tempo de Tela Infantil</title>
+    
+    <!-- Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuração de cores do Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#e0f2fe',
+                            DEFAULT: '#0ea5e9',
+                            dark: '#0369a1',
+                            accent: '#f59e0b',
+                            green: '#10b981',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts: Nunito  -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Conexão com o seu arquivo CSS externo -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <header class="bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand text-white p-2 rounded-lg">
+                    <i class="fa-solid fa-seedling text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800 leading-tight">Reduzir para Crescer</h1>
+                    <p class="text-xs text-gray-500 font-semibold">Saúde Digital Infantil</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
+        
+        <section class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
+                Calculadora de <span class="text-brand">Tempo de Tela</span>
+            </h2>
+            <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                Descubra se o tempo que seu filho passa no celular, tablet ou TV está adequado para a idade dele, segundo as recomendações da <strong>Organização Mundial da Saúde (OMS)</strong>.
+            </p>
+        </section>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+            
+            <!-- Card da Calculadora -->
+            <div class="bg-white rounded-2xl shadow-xl shadow-brand-light/50 p-6 md:p-8 border border-gray-100">
+                <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-calculator text-brand"></i> Faça o cálculo
+                </h3>
+                
+                <form id="calculator-form" class="space-y-5">
+                    <div>
+                        <label for="age" class="block text-sm font-semibold text-gray-700 mb-1">Idade da criança (anos)</label>
+                        <input type="number" id="age" min="0" max="17" required placeholder="Ex: 6"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition-all bg-gray-50 focus:bg-white text-lg">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Tempo diário médio nas telas</label>
+                        <div class="flex gap-4">
+                            <div class="w-1/2">
+                                <div class="relative">
+                                    <input type="number" id="hours" min="0" max="24" required placeholder="0"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition-all bg-gray-50 focus:bg-white text-lg text-right pr-12">
+                                    <span class="absolute right-4 top-3 text-gray-400 font-semibold">h</span>
+                                </div>
+                            </div>
+                            <div class="w-1/2">
+                                <div class="relative">
+                                    <input type="number" id="minutes" min="0" max="59" placeholder="0"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition-all bg-gray-50 focus:bg-white text-lg text-right pr-14">
+                                    <span class="absolute right-4 top-3 text-gray-400 font-semibold">min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" 
+                        class="w-full bg-brand hover:bg-brand-dark text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-brand/30 flex justify-center items-center gap-2 text-lg mt-4">
+                        <i class="fa-solid fa-stopwatch"></i> Analisar Tempo
+                    </button>
+                </form>
+            </div>
+
+            <!-- Área de Resultado -->
+            <div id="result-area" class="hidden-result bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100 flex flex-col justify-center h-full min-h-[300px]">
+                <div id="result-content" class="text-center">
+                    <div id="result-icon" class="text-5xl mb-4"></div>
+                    <h3 id="result-title" class="text-2xl font-extrabold mb-3"></h3>
+                    <p id="result-message" class="text-gray-600 text-lg leading-relaxed mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100"></p>
+                    <button onclick="resetCalculator()" class="text-brand font-semibold hover:text-brand-dark transition-colors flex items-center justify-center gap-2 w-full">
+                        <i class="fa-solid fa-rotate-left"></i> Fazer novo cálculo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Placeholder State -->
+            <div id="empty-state" class="bg-gray-50 rounded-2xl p-6 md:p-8 border border-dashed border-gray-300 flex flex-col items-center justify-center text-center h-full min-h-[300px] text-gray-400">
+                <i class="fa-solid fa-chart-pie text-5xl mb-3 text-gray-300"></i>
+                <p class="font-medium text-lg text-gray-500">Preencha os dados ao lado para ver a análise com base na OMS.</p>
+            </div>
+        </div>
+
+        <section class="mt-16 bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-gray-100">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Recomendações da OMS</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                    <div class="flex items-center gap-3 mb-3 text-blue-600">
+                        <i class="fa-solid fa-baby text-2xl"></i>
+                        <h4 class="font-bold text-lg">Menos de 2 anos</h4>
+                    </div>
+                    <p class="text-gray-700 text-sm">
+                        <strong class="text-red-500">Zero tempo de tela.</strong><br>
+                        Bebês não devem ter acesso a telas sedentárias.
+                    </p>
+                </div>
+                <div class="bg-green-50 rounded-xl p-5 border border-green-100">
+                    <div class="flex items-center gap-3 mb-3 text-green-600">
+                        <i class="fa-solid fa-child text-2xl"></i>
+                        <h4 class="font-bold text-lg">2 a 4 anos</h4>
+                    </div>
+                    <p class="text-gray-700 text-sm">
+                        <strong class="text-brand-dark">Máximo de 1 hora/dia.</strong><br>
+                        Menos é sempre melhor. Priorize conteúdos educativos.
+                    </p>
+                </div>
+                <div class="bg-yellow-50 rounded-xl p-5 border border-yellow-100">
+                    <div class="flex items-center gap-3 mb-3 text-yellow-600">
+                        <i class="fa-solid fa-child-reaching text-2xl"></i>
+                        <h4 class="font-bold text-lg">5 a 17 anos</h4>
+                    </div>
+                    <p class="text-gray-700 text-sm">
+                        <strong class="text-brand-dark">Máximo de 2 horas/dia.</strong><br>
+                        Tempo recreativo. Não inclui uso para fins escolares.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-8 mt-10">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div>
+                <p class="font-bold text-white text-lg">Projeto de Extensão - UNINTER</p>
+                <p class="text-sm mt-1">Disciplina: Tecnologia Aplicada à Inclusão Digital</p>
+            </div>
+            <div class="bg-gray-700 p-4 rounded-lg">
+                <p class="text-sm"><span class="text-gray-400">Desenvolvido por:</span></p>
+                <p class="font-bold text-white">Antonio Sergio Farias Mota</p>
+                <p class="text-sm">RU: 5147183</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Conexão com o seu arquivo JavaScript externo -->
+    <script src="js/script.js"></script>
+</body>
+</html>
